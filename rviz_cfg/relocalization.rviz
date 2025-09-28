@@ -159,7 +159,7 @@ Visualization Manager:
           Value: false
       Enabled: true
       Name: mapping
-    - Class: rviz/Group
+
       Displays:
         - Angle Tolerance: 0.009999999776482582
           Class: rviz/Odometry
@@ -201,13 +201,13 @@ Visualization Manager:
     - Alpha: 0
       Buffer Length: 2
       Class: rviz/Path
-      Color: 25; 255; 255
+      Color: 0; 255; 0
       Enabled: true
       Head Diameter: 0
       Head Length: 0
       Length: 0.30000001192092896
       Line Style: Billboards
-      Line Width: 0.20000000298023224
+      Line Width: 0.10000000298023224
       Name: Path
       Offset:
         X: 0
@@ -252,6 +252,19 @@ Visualization Manager:
       Use Fixed Frame: true
       Use rainbow: false
       Value: true
+    - Class: rviz/Image
+      Enabled: true
+      Image Topic: /camera/color/image_raw 
+      Max Value: 1
+      Median window: 5
+      Min Value: 0
+      Name: Image
+      Normalize Range: true
+      Queue Size: 2
+      Transport Hint: compressed
+      Unreliable: false
+      Value: true
+    - Class: rviz/Group
     - Class: rviz/MarkerArray
       Enabled: false
       Marker Topic: /MarkerArray
