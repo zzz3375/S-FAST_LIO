@@ -8,6 +8,7 @@
 #include <Eigen/Geometry>
 #include <Eigen/Dense>
 #include <Eigen/Sparse>
+// #include <omp.h>
 
 #include "use-ikfom.hpp"
 #include <ikd-Tree/ikd_Tree.h>

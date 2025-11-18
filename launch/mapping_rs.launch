@@ -14,6 +14,10 @@
 	<param name="cube_side_length" type="double" value="1000" />
     <node pkg="sfast_lio" type="fastlio_mapping" name="laserMapping" output="screen" /> 
 
+	<node pkg="rosbag" type="play" name="rosbag_play" output="screen"
+          args="--clock -d 1  $(find sfast_lio)/../../chuangye_02.bag">
+    </node>
+
 	<group if="$(arg rviz)">
 	<node launch-prefix="nice" pkg="rviz" type="rviz" name="rviz" args="-d $(find sfast_lio)/rviz_cfg/loam_livox.rviz" />
 	</group>
