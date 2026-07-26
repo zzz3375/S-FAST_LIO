@@ -19,7 +19,7 @@
 #include <tf/transform_datatypes.h>
 #include <tf/transform_broadcaster.h>
 #include <geometry_msgs/Vector3.h>
-#include <livox_ros_driver/CustomMsg.h>
+#include <livox_ros_driver2/CustomMsg.h>
 #include "preprocess.h"
 #include <ikd-Tree/ikd_Tree.h>
 
@@ -119,7 +119,7 @@ void standard_pcl_cbk(const sensor_msgs::PointCloud2::ConstPtr &msg)
 
 double timediff_lidar_wrt_imu = 0.0;
 bool timediff_set_flg = false;
-void livox_pcl_cbk(const livox_ros_driver::CustomMsg::ConstPtr &msg)
+void livox_pcl_cbk(const livox_ros_driver2::CustomMsg::ConstPtr &msg)
 {
     mtx_buffer.lock();
     double preprocess_start_time = omp_get_wtime();
@@ -710,6 +710,8 @@ int main(int argc, char **argv)
     /**************** save map ****************/
     /* 1. make sure you have enough memories
     /* 2. pcd save will largely influence the real-time performences **/
+
+    // ---- save accumulated scans (only if pcd_save_en was enabled at runtime) ----
     if (pcl_wait_save->size() > 0 && pcd_save_en)
     {
         pcl::PointCloud<pcl::PointXYZ>::Ptr cloud(new pcl::PointCloud<pcl::PointXYZ>);
@@ -727,8 +729,11 @@ int main(int argc, char **argv)
         pcl::PCDWriter pcd_writer;
         cout << "current scan saved to /PCD/" << file_name << endl;
         pcd_writer.writeBinary(all_points_dir, *cloud);
+    }
 
-        //////////////////////////////////////
+    // ---- always save ikd-tree map on exit (independent of pcd_save_en) ----
+    if (ikdtree.Root_Node != nullptr)
+    {
         PointVector().swap(ikdtree.PCL_Storage);
         ikdtree.flatten(ikdtree.Root_Node, ikdtree.PCL_Storage, NOT_RECORD);
         featsFromMap->clear();
