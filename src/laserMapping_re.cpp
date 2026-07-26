@@ -386,8 +386,9 @@ void publish_frame_world(const ros::Publisher &pubLaserCloudFull_)
 
     /**************** save map ****************/
     /* 1. make sure you have enough memories
-    /* 2. noted that pcd save will influence the real-time performences **/
-    if (pcd_save_en)
+    /* 2. noted that pcd save will influence the real-time performences
+    /* 3. Relocalization never save point-clouds **/
+    if (0) // Relocalization never save point-clouds //never use if (pcd_save_en)
     {
         int size = feats_undistort->points.size();
         PointCloudXYZI::Ptr laserCloudWorld(

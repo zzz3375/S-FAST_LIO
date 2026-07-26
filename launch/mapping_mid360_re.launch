@@ -3,8 +3,9 @@
 
 	<arg name="rviz" default="true" />
 
-	<rosparam command="load" file="$(find sfast_lio)/config/rslidar.yaml" />
+	<rosparam command="load" file="$(find sfast_lio)/config/mid360.yaml" />
 
+	<param name="pcd_save/pcd_save_en" type="bool" value="0"/> 
 	<param name="feature_extract_enable" type="bool" value="0"/>
 	<!-- 100HZ的bag  point_filter_num建议设置为1;   10HZ的bag建议设置为2或3 -->
 	<param name="point_filter_num" type="int" value="2"/>               
@@ -12,14 +13,9 @@
 	<param name="filter_size_surf" type="double" value="0.5" />
 	<param name="filter_size_map" type="double" value="0.5" />
 	<param name="cube_side_length" type="double" value="1000" />
-    <node pkg="sfast_lio" type="fastlio_mapping_re" name="laserMapping_re" output="screen" /> 
     
-	<node pkg="rosbag" type="play" name="rosbag_play" output="screen"
-          args="--clock -d 1  $(find sfast_lio)/../../chuangye_0910_high_01.bag">
-    </node>
+	<node pkg="sfast_lio" type="fastlio_mapping_re" name="laserMapping_re" output="screen" />  
 
-	<group if="$(arg rviz)">
-	<node launch-prefix="nice" pkg="rviz" type="rviz" name="rviz" args="-d $(find sfast_lio)/rviz_cfg/relocalization.rviz" />
-	</group>
+
 
 </launch>
